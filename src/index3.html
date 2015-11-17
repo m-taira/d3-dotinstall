@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"></meta>
+  <title>D3.jsの練習</title>
+</head>
+<body>
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+  var dataset = [11, 23, 4, 33, 93];
+
+  var w = 500;
+  var h = 200;
+
+  var svg = d3.select("body").append("svg").attr({width: w, height: h});
+
+  svg.selectAll("circle")
+      .data(dataset)
+      .enter()
+      .append("circle")
+      .transition()
+      .delay(function (d, i) {
+        return i * 300;
+      })
+      .duration(1000)
+      .ease("bounce")
+      .each("start", function () {
+        d3.select(this).attr({
+          fill: "green",
+          r: 0,
+          cy: h
+        });
+      })
+      .attr({
+        cx: function (d, i) {
+          return 50 + (i * 100);
+        },
+        cy: h / 2,
+        r: function(d) { return d },
+        fill: "red"
+      })
+      .each("end", function () {
+        d3.select(this)
+            .transition()
+            .duration(800)
+            .attr({
+              fill: "pink",
+              r: 0,
+              cy: 0
+            });
+      });
+</script>
+</body>
+</html>
